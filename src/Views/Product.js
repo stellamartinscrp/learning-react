@@ -2,42 +2,16 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import Loader from "../Components/Loader";
+import {useAxiosGet} from "../Hooks/HttpRequests";
 
 function Product() {
 
     const {id} = useParams()
     const url = `https://60673ad598f405001728e948.mockapi.io/products/${id}`
-    const [product, setProduct] = useState({
-        loading: false,
-        data: null
-    })
+
     let content = null
 
-    useEffect(() => {
-        setProduct({
-            loading: true,
-            data: null,
-            error: false
-        })
-
-        axios.get(url)
-            .then(response => {
-                debugger;
-                setProduct({
-                    loading: false,
-                    data: response.data,
-                    error: false
-                })
-            })
-            .catch(() => {
-                debugger;
-                setProduct({
-                    loading: false,
-                    data: null,
-                    error: true
-                })
-            })
-    }, [url])
+    let product = useAxiosGet(url)
 
     if(product.error){
         content = <p className="text-center">
@@ -64,8 +38,6 @@ function Product() {
                 </div>
             </div>
 
-    } else {
-        content = <p>teste</p>
     }
 
     return (
