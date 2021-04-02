@@ -1,6 +1,7 @@
-import React, {useEffect, useState, setState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import Loader from "../Components/Loader";
+import ProductCard from "../Components/ProductCard";
 
 function Home() {
 
@@ -48,18 +49,9 @@ function Home() {
 
     if (products.data) {
 
-        content = products.data.map((product, key) =>
-            <div>
-                <h1 className="font-bold text-xl mb-3">{product.name}</h1>
-                <div>
-                    <img src={product.images ? product.images[0].imageUrl : null} alt={product.name}/>
-                </div>
-                <div className="font-bold text-xl mb-3">
-                    R$ {product.price}
-                </div>
-                <div>
-                    {product.description}
-                </div>
+        content = products.data.map((product) =>
+            <div key={product.id}>
+               <ProductCard product={product} />
             </div>
 
         )
